@@ -311,7 +311,13 @@ class Okta:
         }
 
         response = self.call(application_url, headers=headers)
-
+        
+        if response.status_code // 100 == 5:
+            print_tty(f"ERROR ({response.status_code}):\nHEADERS: {response.headers}\n{response.content}")
+            request = response.request
+            print_tty(f"Request: {request.method} {request.url}\nHEADERS: {request.headers}\n{request.body}")
+            sys.exit(1)
+        
         return response.content.decode()
 
     def call(self, endpoint=None, headers=None, json_payload=None):

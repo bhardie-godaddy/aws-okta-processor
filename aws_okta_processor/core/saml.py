@@ -25,6 +25,8 @@ def get_saml_assertion(saml_response=None):
             return input_tag.get('value')
 
     print_tty("ERROR: SAMLResponse tag was not found!")
+    import pprint
+    print_tty(f"DEBUG: {pprint.pformat(saml_response)}")
     sys.exit(1)
 
 
